@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat&display=swap');
+
+body{
+  margin:0;
+  padding:0;
+}
+
+.wrapper{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.Container{
+  position: absolute;
+  padding-top: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 99%;
+  max-width: 500px;
+  text-align: center;
+  align-items: center;
+  background-color: inherit;
+}
+
+.CountryOutline{
+  width: 100%;
+  height: 100%;
+  max-height: 10rem;
+  padding-top: 10%;
+}
+
+.Header{
+  /* position: absolute;
+  top:0; */
+  width:100%;
+  font-size: 2rem;
+  border-style: none none solid none;
+  border-color: lightgray;
+}
+
+.HeaderText{
+  font-family: 'Bebas Neue', cursive;
+  text-align: center;
+  position: relative;
+  width: 60%;
+  display:inline-block;
+}
+
+.HeaderGreenText{
+  display: inline-block;
+  color: green;
+}
+
+.IconContainer{
+  width: 20%;
+  display:inline-block;
+}
+
+.Icon{
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.HelpPage{
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 100%;
+  position: absolute;
+  top:0;
+  z-index: 1;
+}
+
+.HelpText{
+  text-align: left;
+  border-style: none none solid none;
+  border-color: lightgray;
+  border-width: 2px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .8rem;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.HelpClose{
+  width: 35%;
+  display: inline-block;
+  text-align: right;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  margin-right:5%
+}
+
+a{
+  text-decoration-color: black;
+}
+
+.GuessInput{
+  width: 98%;
+  box-sizing: border-box;
+  border-radius: .2rem;
+  border-color: lightgray;
+  border-style: solid;
+  font-family: 'Montserrat', sans-serif;
+  height:2rem;
+}
+
+.GuessSubmit{
+  width:98%;
+  margin-top: 1%;
+  border-style: solid;
+  border-radius: .2rem;
+  border-color: lightgray;
+  background-color: white;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  height:2rem;
+}
+
+.GuessList{
+  max-height: 16.5vmax;
+  width: 98%;
+  overflow: hidden;
+  overflow-y: scroll;
+  list-style-type: none;
+  padding: 0;
+  margin: 5% 0 0 0;
+  background-color: lightgray;
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+  bottom:0;
+}
+
+
+.SuggestionBar{
+  background-color: white;
+  border-radius: .4rem;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  border-style: solid;
+  border-color: lightgray;
+  color:black;
+}
+
+.GuessList::-webkit-scrollbar {
+  width: .5em;
+  opacity: 0;
+}
+ 
+.GuessList::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+}
+ 
+.GuessList::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+  outline: 1px solid slategrey;
+  border-radius: .2rem;
+}
+
+.GuessWrapper{
+  position: relative;
+}
+
+.GuessGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: auto;
+  columns:7;
+  width:98%;
+  gap:5px;
+  padding-bottom: 5%;
+  margin-left: 1%;
+  
+}
+
+.GuessBar{
+  width: 100%;
+  height: 2rem;
+  background-color: lightgray;
+  border-radius: .2rem;
+}
+
+.GuessBox{
+  display:flex;
+  border-style: solid;
+  border-color: lightgray;
+  border-radius: .2rem;
+  height: 2rem;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+@keyframes linedown {
+  100%{
+    width: 100%;
+  }
+}
+
+.CompleteBar{
+  height: 2rem;
+  border-radius:.2rem ;
+  width: 98%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 1%;
+  color:white;
+  font-weight: 600;
+}
+
+.Settings{
+  position: absolute;
+  top:0;
+  height: 100%;
+  background: inherit;
+  color: inherit;
+  z-index: 1;
+}
+
+.setting{
+  text-align: left;
+  margin-left: 1%;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.popUp{
+  width:10rem;
+  height:3rem;
+  font-size: .8rem;
+  z-index: 1;
+  position: absolute;
+  top:10%;
+  left:30%;
+  transform: translate(-70%,-90%);
+  transition: all 1s ease;
+  background-color: inherit;
+  border-radius: .2rem;
+  border-color: lightgray;
+  border-style: solid;
+  border-width: 2px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* wobble animation adapted from https://codepen.io/zhuziyi/pen/mJeprY */
+@-webkit-keyframes wobble {
+  0% {
+    -webkit-transform: none;
+    transform: none
+  }
+  25% {
+    -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg)
+  }
+  50% {
+    -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg)
+  }
+  75% {
+    -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg)
+  }
+  100% {
+    -webkit-transform: none;
+    transform: none
+  }
+}
+
+@keyframes wobble {
+  0% {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none
+  }
+  25% {
+    -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    -ms-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg)
+  }
+  50% {
+    -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    -ms-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg)
+  }
+  75% {
+    -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    -ms-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg)
+  }
+  100% {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none
+  }
+}
+
+.wobble {
+  -webkit-animation-name: wobble;
+  animation-name: wobble
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
