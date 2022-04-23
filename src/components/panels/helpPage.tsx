@@ -97,7 +97,7 @@ const HelpPage = (props:props) =>{
             </div>
             <p style={{backgroundColor:'inherit'}}>
                 (
-                    <a href='google.com'>source code</a>
+                    <a href='https://github.com/tobyrushton/worldle-unlimited' target='_blank' rel="noreferrer">source code</a>
                 )
             </p>
         </div>
