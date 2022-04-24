@@ -79,10 +79,7 @@ const App = () => {
       setDisplaySuggestions(false);
     }
   };
-  
-  useEffect(()=>{
-    console.log(country.country)
-  },[country])
+
 
   const handleComplete =(win:boolean) =>{
     setComplete({
