@@ -8,12 +8,12 @@ interface props{
 const SettingsPage = ({toggle}:props)=>{
     const {theme,changeTheme} = useTheme()
     return(
-        <div className="Container Settings">
+        <div className="Container Page">
             <div className="Header">
-                <div className="HeaderText" style={{fontSize:'1.5rem',textAlign:'right'}}>
+                <div className="HeaderText" style={{fontSize:'1.5rem',textAlign:'right',marginRight:'5%'}}>
                     Settings
                 </div>
-                <div className='HelpClose' onClick={()=>toggle()}>
+                <div className='ClosePage' onClick={()=>toggle()}>
                     &times;
                 </div>
             </div>

@@ -41,7 +41,7 @@ body{
   font-family: 'Bebas Neue', cursive;
   text-align: center;
   position: relative;
-  width: 60%;
+  width: 50%;
   display:inline-block;
 }
 
@@ -55,16 +55,22 @@ body{
   display:inline-block;
 }
 
+.RightIcons{
+  width:20%;
+  display: inline-block;
+}
+
 .Icon{
   width: 2rem;
   height: 2rem;
+  padding-right: .7rem;
   cursor: pointer;
 }
 
-.HelpPage{
+.Page{
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: inherit;
   opacity: 100%;
   position: absolute;
   top:0;
@@ -82,7 +88,7 @@ body{
   margin-right: 1%;
 }
 
-.HelpClose{
+.ClosePage{
   width: 35%;
   display: inline-block;
   text-align: right;
@@ -212,15 +218,6 @@ a{
   font-weight: 600;
 }
 
-.Settings{
-  position: absolute;
-  top:0;
-  height: 100%;
-  background: inherit;
-  color: inherit;
-  z-index: 1;
-}
-
 .setting{
   text-align: left;
   margin-left: 1%;
@@ -310,4 +307,22 @@ a{
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+}
+
+.statsRow{
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+.stat{
+  padding:1rem;
+  justify-content: center;
+  align-items: center;
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h3{
+  font-family: 'Montserrat', sans-serif;
 }

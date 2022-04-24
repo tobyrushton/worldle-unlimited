@@ -7,6 +7,7 @@ import GuessBar from './components/guessBar';
 import data from './domain/countryKeys.json'
 import useTheme from './hooks/useTheme';
 import PopUp from './components/popUp';
+import useStats from './hooks/useStats';
 
 //235 countries in list
 export interface Guess {
@@ -53,6 +54,7 @@ const App = () => {
   const countryList:countries[] = data as countries[]
 
   const {theme} = useTheme()
+  const {stats,updateStats:setStats} = useStats()
 
   const colourPallete ={
     backgroundColor:theme === 'dark'?'#121212':'#FFFFFF',
@@ -77,6 +79,10 @@ const App = () => {
       setDisplaySuggestions(false);
     }
   };
+  
+  useEffect(()=>{
+    console.log(country.country)
+  },[country])
 
   const handleComplete =(win:boolean) =>{
     setComplete({
@@ -87,6 +93,22 @@ const App = () => {
       value:country.country,
       enabled: true,
       delay:2000
+    })
+
+    setStats({
+      wins:win?stats.wins+1:stats.wins,
+      losses:win?stats.losses:stats.losses+1,
+      winstreak:win?stats.winstreak+1:0,
+      bestStreak:win&&stats.winstreak===stats.bestStreak?stats.bestStreak+1:stats.bestStreak,
+      played:stats.played+1,
+      attempts:{
+        1:guessesUsed+1===1?stats.attempts[1]+1:stats.attempts[1],
+        2:guessesUsed+1===2?stats.attempts[2]+1:stats.attempts[2],
+        3:guessesUsed+1===3?stats.attempts[3]+1:stats.attempts[3],
+        4:guessesUsed+1===4?stats.attempts[4]+1:stats.attempts[4],
+        5:guessesUsed+1===5?stats.attempts[5]+1:stats.attempts[5],
+        6:guessesUsed+1===6 && win?stats.attempts[6]+1:stats.attempts[6]
+      }
     })
   };
 

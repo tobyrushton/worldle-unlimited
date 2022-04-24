@@ -40,12 +40,12 @@ const HelpPage = (props:props) =>{
     }
     
     return(
-        <div className='Container HelpPage' style={{backgroundColor:'inherit'}}>
+        <div className='Container Page' style={{backgroundColor:'inherit'}}>
             <div className="Header">
-                <div className="HeaderText" style={{fontSize:'1.5rem',textAlign:'right'}}>
+                <div className="HeaderText" style={{fontSize:'1.5rem',textAlign:'right',marginLeft:'5%'}}>
                     How To Play
                 </div>
-                <div className='HelpClose' onClick={()=>props.toggle()}>
+                <div className='ClosePage' onClick={()=>props.toggle()}>
                     &times;
                 </div>
             </div>
