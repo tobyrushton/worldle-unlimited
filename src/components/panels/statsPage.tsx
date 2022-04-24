@@ -46,7 +46,7 @@ const StatsPage = ({toggle}:props) =>{
                 </div>
                 <div className='stat'>                    
                     <div style={{fontWeight:'bold',fontSize:'1.5rem'}}>
-                        {Math.floor((stats.wins/stats.played)*100)}
+                        {Math.floor((stats.wins/stats.played)*100).toString()}
                     </div>
                     <div>
                         &nbsp;Win %
@@ -83,7 +83,7 @@ const StatsPage = ({toggle}:props) =>{
                             display:'inline-block',
                             padding:'.2rem',
                             minWidth:'.6rem',
-                            width:'calc(80%*'+stats.attempts[1]/stats.played+')',
+                            width:stats.played!==0?'calc(80%*'+stats.attempts[1]/stats.played+')':0,
                             marginBottom:'.5rem'
                         }}>{stats.attempts[1]}</div>
                     </li>
@@ -95,7 +95,7 @@ const StatsPage = ({toggle}:props) =>{
                             display:'inline-block',
                             padding:'.2rem',
                             minWidth:'.6rem',
-                            width:'calc(80%*'+stats.attempts[2]/stats.played+')',
+                            width:stats.played!==0?'calc(80%*'+stats.attempts[2]/stats.played+')':0,
                             marginBottom:'.5rem'
                         }}>{stats.attempts[2]}</div>
                     </li>
@@ -107,7 +107,7 @@ const StatsPage = ({toggle}:props) =>{
                             display:'inline-block',
                             padding:'.2rem',
                             minWidth:'.6rem',
-                            width:'calc(80%*'+stats.attempts[3]/stats.played+')',
+                            width:stats.played!==0?'calc(80%*'+stats.attempts[3]/stats.played+')':0,
                             marginBottom:'.5rem'
                         }}>{stats.attempts[3]}</div>
                     </li>
@@ -119,7 +119,7 @@ const StatsPage = ({toggle}:props) =>{
                             display:'inline-block',
                             padding:'.2rem',
                             minWidth:'.6rem',
-                            width:'calc(80%*'+stats.attempts[4]/stats.played+')',
+                            width:stats.played!==0?'calc(80%*'+stats.attempts[4]/stats.played+')':0,
                             marginBottom:'.5rem'
                         }}>{stats.attempts[4]}</div>
                     </li>
@@ -131,7 +131,7 @@ const StatsPage = ({toggle}:props) =>{
                             display:'inline-block',
                             padding:'.2rem',
                             minWidth:'.6rem',
-                            width:'calc(80%*'+stats.attempts[5]/stats.played+')',
+                            width:stats.played!==0?'calc(80%*'+stats.attempts[5]/stats.played+')':0,
                             marginBottom:'.5rem'
                         }}>{stats.attempts[5]}</div>
                     </li>
@@ -143,7 +143,7 @@ const StatsPage = ({toggle}:props) =>{
                             display:'inline-block',
                             padding:'.2rem',
                             minWidth:'.6rem',
-                            width:'calc(80%*'+stats.attempts[6]/stats.played+')',
+                            width:stats.played!==0?'calc(80%*'+stats.attempts[6]/stats.played+')':0,
                             marginBottom:'.5rem'
                         }}>{stats.attempts[6]}</div>
                     </li>
