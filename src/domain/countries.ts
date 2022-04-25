@@ -88,7 +88,6 @@ export default class Country{
 
     getDirectionToCountry(country:countryType):directionEmojis{
         if(this.latitude === country.latitude && this.longitude === country.longitude) return directionArrows['F']
-        console.log(this.country)
         const getDegree = ():Direction =>{
             const cardinals:Direction[] = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW","N"]; 
             const carDirect = (x0:number,y0:number, x1:number,y1:number) => Math.round( Math.atan2((x1-x0),(y1-y0)) * (8 / Math.PI) ); 
