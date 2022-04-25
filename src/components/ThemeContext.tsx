@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from'react'
+import React from'react'
 import { useCreateTheme } from '../hooks/useCreateTheme';
 
 type Theme = 'light' | 'dark';
