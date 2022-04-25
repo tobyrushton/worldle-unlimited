@@ -8,6 +8,7 @@ import data from './domain/countryKeys.json'
 import useTheme from './hooks/useTheme';
 import PopUp from './components/popUp';
 import useStats from './hooks/useStats';
+import { getRandomInt } from './domain/random';
 
 //235 countries in list
 export interface Guess {
@@ -225,5 +226,3 @@ const App = () => {
 }
 
 export default App;
-
-const getRandomInt = (max:number):number=> Math.floor(Math.random() * max);
