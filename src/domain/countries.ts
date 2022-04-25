@@ -9,15 +9,22 @@ export interface countryType{
 
 export type Direction =
     "N"|
+    "NNE"|
     "NE"|
+    "ENE"|
     "E"|
+    "ESE"|
     "SE"|
+    "SSE"|
     "S"|
+    "SSW"|
     "SW"|
+    "WSW"|
     "W"|
+    "WNW"|
+    "NNW"|
     "NW"|
     "F"; // win 
-
 export type directionEmojis=
     "⬆️"|
     "↗️"|
@@ -36,12 +43,20 @@ export type countries =
 const directionArrows: Record<Direction, directionEmojis> = {
     N: "⬆️",
     NE: "↗️",
+    NNE: "↗️",
+    ENE: "↗️",
     E: "➡️",
     SE: "↘️",
+    SSE: "↘️",
+    ESE: "↘️",
     S: "⬇️",
     SW: "↙️",
+    SSW: "↙️",
+    WSW: "↙️",
     W: "⬅️",
     NW: "↖️",
+    NNW: "↖️",
+    WNW: "↖️",
     F:"🎉"
 }
 
@@ -72,52 +87,15 @@ export default class Country{
     }
 
     getDirectionToCountry(country:countryType):directionEmojis{
-        /*
-        return values:
-            1 = N   4 = SE  7 = W
-            2 = NE  5 = S   8 = NW
-            3 = E   6 = SW
-        */
-        const getDirection = ():Direction =>{
-            if(country.longitude === this.longitude && country.latitude === this.latitude) return 'F';
-            interface longAndLat{
-                minLat:number,
-                lat:number,
-                maxLat:number,
-                minLong:number,
-                long:number
-                maxLong:number,
-            }
-            //allows for an error margin when returning direction
-            const guessLongAndLat:longAndLat ={
-                minLat:country.latitude-10,
-                lat:country.latitude,
-                maxLat:country.latitude+10,
-                minLong:country.longitude-10,
-                long:country.longitude,
-                maxLong:country.longitude+10
-            }
-
-            /*
-                N - long < maxLong && long > minLong && lat> maxLat
-                NW - long > maxLong && lat> maxLat
-                W - lat <maxLat && lat > minLat && long> maxLong
-                SW - long > maxLong && lat<minLat
-                S - long < maxLong && long > minLong && lat<minLat
-                SE - long < minLong && lat<minLat
-                E - lat < maxLat && lat > minLat && long < minLong
-                NE - lat>maxLat && long < minLong
-            */
-
-            return this.latitude>guessLongAndLat.maxLat?
-                this.longitude>guessLongAndLat.maxLong? 'NE': 
-                this.longitude<guessLongAndLat.minLong?'NW':'N':
-                this.latitude>guessLongAndLat.minLat? 
-                this.longitude>guessLongAndLat.long?'E':'W':
-                this.longitude>guessLongAndLat.maxLong? 'SE':
-                this.longitude>guessLongAndLat.minLong? 'S': 'SW'                   
+        if(this.latitude === country.latitude && this.longitude === country.longitude) return directionArrows['F']
+        console.log(this.country)
+        const getDegree = ():Direction =>{
+            const cardinals:Direction[] = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW","N"]; 
+            const carDirect = (x0:number,y0:number, x1:number,y1:number) => Math.round( Math.atan2((x1-x0),(y1-y0)) * (8 / Math.PI) ); 
+            const cardIndex = (dir:number) => dir<0 ? dir+16 : dir; 
+            return cardinals[cardIndex(carDirect( country.longitude,country.latitude, this.longitude,this.latitude))]
         }
-        return directionArrows[getDirection()]
+        return directionArrows[getDegree()]
     }
 
     getPercentage(distance:number):number{
