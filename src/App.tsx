@@ -136,6 +136,7 @@ const App = () => {
     if(distance === 0) handleComplete(true) //win
     setGuesses(guessList)
     setCurrentGuess({value:"",code:-1})
+    setDisplaySuggestions(true)
     setGuessesUsed(guessesUsed+1)
     if(guessesUsed+1 === 6 && distance !==0) handleComplete(false) //loss
   }
