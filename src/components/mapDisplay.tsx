@@ -15,6 +15,7 @@ interface mapDisplayProps{
 
 const MapDisplay = (props:mapDisplayProps)=>{
     const [countrySVGs, setCountrySVGs] = useState<svgs[]>()
+    const [rotate,setRotate] = useState<number>(0)
     const {theme} = useTheme()
     const {settings} = useSettings()
 
@@ -24,6 +25,10 @@ const MapDisplay = (props:mapDisplayProps)=>{
         setCountrySVGs(svgs)
     },[])
 
-    return !settings.hideImage? <img src={countrySVGs? countrySVGs[props.number].file:null} className='CountryOutline' alt="country" style={{filter: theme==='dark'?'brightness(0) invert(1)':'',transform:settings.randomRotate?'rotate('+getRandomInt(360)+'deg)':''}}/>:null
+    useEffect(()=>{
+        setRotate(getRandomInt(360))
+    },[settings.randomRotate,props.number])
+
+    return !settings.hideImage? <img src={countrySVGs? countrySVGs[props.number].file:null} className='CountryOutline' alt="country" style={{filter: theme==='dark'?'brightness(0) invert(1)':'',transform:settings.randomRotate?'rotate('+rotate+'deg)':''}}/>:null
 }
 export default MapDisplay
