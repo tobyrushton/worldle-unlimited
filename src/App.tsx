@@ -113,8 +113,8 @@ const App = () => {
 
   const handleCountryGuess = ():void =>{
     const current:currentGuess={
-      value:currentGuess.code !== -1? currentGuess.value:countryList.map((country:countries)=>country.toLowerCase()).includes(currentGuess.value)?countryList[countryList.map((country:countries)=>country.toLowerCase()).indexOf(currentGuess.value)]:'',
-      code: currentGuess.code !== -1? currentGuess.code:countryList.map((country:countries)=>country.toLowerCase()).indexOf(currentGuess.value)
+      value:currentGuess.code !== -1? currentGuess.value:countryList.map((country:countries)=>country.toLowerCase()).includes(currentGuess.value.trim().toLocaleLowerCase())?countryList[countryList.map((country:countries)=>country.toLowerCase()).indexOf(currentGuess.value.trim().toLowerCase())]:'',
+      code: currentGuess.code !== -1? currentGuess.code:countryList.map((country:countries)=>country.toLowerCase()).indexOf(currentGuess.value.trim().toLowerCase())
     }
     if(current.code===-1){
         setPopup({
