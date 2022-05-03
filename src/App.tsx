@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 import './css/App.css';
-import Country, {directionEmojis, getCountry, countries, countryType} from './domain/countries';
+import Country, {directionEmojis, getCountry, countryType} from './domain/countries';
 import MapDisplay from './components/mapDisplay';
 import Header from './components/header';
 import GuessBar from './components/guessBar';
-import data from './domain/countryKeys.json'
+import data from './domain/countries.json'
 import useTheme from './hooks/useTheme';
 import PopUp from './components/popUp';
 import useStats from './hooks/useStats';
@@ -52,7 +52,7 @@ const App = () => {
   const [popup,setPopup] = useState<popup>({enabled:false,value:'',delay:0})
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-  const countryList:countries[] = data as countries[]
+  const countryList:countryType[] = data as countryType[]
 
   const {theme} = useTheme()
   const {stats,updateStats:setStats} = useStats()
@@ -113,8 +113,8 @@ const App = () => {
 
   const handleCountryGuess = ():void =>{
     const current:currentGuess={
-      value:currentGuess.code !== -1? currentGuess.value:countryList.map((country:countries)=>country.toLowerCase()).includes(currentGuess.value.trim().toLocaleLowerCase())?countryList[countryList.map((country:countries)=>country.toLowerCase()).indexOf(currentGuess.value.trim().toLowerCase())]:'',
-      code: currentGuess.code !== -1? currentGuess.code:countryList.map((country:countries)=>country.toLowerCase()).indexOf(currentGuess.value.trim().toLowerCase())
+      value:currentGuess.code !== -1? currentGuess.value:countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).includes(currentGuess.value.trim().toLocaleLowerCase())?countryList[countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).indexOf(currentGuess.value.trim().toLowerCase())].country:'',
+      code: currentGuess.code !== -1? currentGuess.code:countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).indexOf(currentGuess.value.trim().toLowerCase())
     }
     if(current.code===-1){
         setPopup({
@@ -159,7 +159,10 @@ const App = () => {
     <div className='wrapper' style={colourPallete}>
       <div className='Container' ref={containerRef}>
         <Header />
-        <MapDisplay number={data.indexOf(country?.country||'')} />
+        <MapDisplay number={()=>{
+          const temp = countryList.find(({country:ctr}:countryType)=> ctr === country.country)
+          return temp? countryList.indexOf(temp):0
+        }}/>
         <div className='GuessWrapper'>
             <div className="GuessGrid">
             {guesses.map((guess:Guess,idx:number)=>{
@@ -170,9 +173,9 @@ const App = () => {
             {displaySuggestion && currentGuess.value!==""?(
               <ul role='listbox' className='GuessList'>
               {
-                countryList?.map((country:countries,idx:number)=>{
-                  return country.toLowerCase().includes(currentGuess.value.toLowerCase()) ? <li className='SuggestionBar' onClick={()=>{
-                    setCurrentGuess({value:country,code:idx})
+                countryList?.map((country:countryType,idx:number)=>{
+                  return country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(currentGuess.value.toLowerCase()) ? <li className='SuggestionBar' onClick={()=>{
+                    setCurrentGuess({value:country.country,code:idx})
                     setDisplaySuggestions(false)
                     //ensures that the user is not forced to click off.
                     inputRef.current?.focus()
