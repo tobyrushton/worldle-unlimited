@@ -66,7 +66,7 @@ const GuessBar = (props:GuessBarProps) =>{
                         ):(
                             <Fragment>
                                 <div className="GuessBox" style={{gridColumn:'1/4'}}>
-                                    {props.guess.country}
+                                    {props.guess.country? props.guess.country.length<15? props.guess.country:props.guess.country.slice(0,15).concat('...'):''}
                                 </div>
                                 <div className="GuessBox" style={{gridColumn:'4/6'}}>
                                     {props.guess.distance}km

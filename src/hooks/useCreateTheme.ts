@@ -10,7 +10,6 @@ export function useCreateTheme<T>(key:string,mode:T):ThemeType<T>{
 
     const updateTheme = (mode:T) =>{
         localStorage.setItem(key,JSON.stringify(mode))
-        console.log(mode)
         setTheme(mode)
     }
 

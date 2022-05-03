@@ -1,17 +1,15 @@
 import GuessBar from "../guessBar";
 import {Guess} from '../../App'
-import Country, { getCountry,countries } from '../../domain/countries'
-import data from '../../domain/countryKeys.json'
+import Country, { getCountry } from '../../domain/countries'
 
 interface props{
     toggle: ()=>void;
 }
 
 const HelpPage = (props:props) =>{
-    const country = new Country(getCountry(45))//Columbia
-    const countries = data as countries[]
+    const country = new Country(getCountry(45))//Colombia
 
-    const firstCountry = getCountry(countries.indexOf('United Kingdom'))
+    const firstCountry = getCountry('United Kingdom')
     const firstDistance = country.getDistanceToCountry(firstCountry)
     const firstGuess:Guess = {
         taken:true,
@@ -21,13 +19,13 @@ const HelpPage = (props:props) =>{
         percentage:country.getPercentage(firstDistance)
     }
 
-    const secondCountry = getCountry(countries.indexOf('Brazil'))
+    const secondCountry = getCountry('Brazil')
     const secondDistance = country.getDistanceToCountry(secondCountry)
     const secondGuess:Guess={
         taken:true,
         country:secondCountry.country,
         distance:secondDistance,
-        direction:country.getDirectionToCountry(firstCountry),
+        direction:country.getDirectionToCountry(secondCountry),
         percentage:country.getPercentage(secondDistance)
     }
 
@@ -72,13 +70,13 @@ const HelpPage = (props:props) =>{
                     <GuessBar guess={firstGuess}/>
                 </div>
                 <p>
-                    The United Kingdom is 8351km away from the target country and it's in the north-east direction
+                    The United Kingdom is 8351km away from the target country and it's in the south-west direction
                 </p>
                 <div className="GuessGrid" style={{padding:0}}>
                     <GuessBar guess={secondGuess}/>
                 </div>
                 <p> 
-                    Brazil is much closer! Only 2443km away and in the north-east direction!
+                    Brazil is much closer! Only 2443km away and in the north-west direction!
                 </p>
                 <div className="GuessGrid" style={{padding:0}}>
                     <GuessBar guess={thirdGuess}/>
