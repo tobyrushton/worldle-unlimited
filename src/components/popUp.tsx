@@ -1,19 +1,19 @@
 interface props{
     value:string
     toggle:()=>void,
-    delay:number
+    delay?:number
 }
 
 const PopUp = ({value,toggle,delay}:props) =>{
-    setTimeout(toggle,delay)
+    if(delay) setTimeout(toggle,delay)
     return(
         <div className="popUp wobble animated">
             <div style={{
                 position:'absolute',
                 top:0,
                 right:'4%',
-                fontSize:'1.5rem'
-                
+                fontSize:'1.5rem',
+                cursor: 'pointer'
             }} onClick={toggle}>&times;</div>
             {value}
         </div>  

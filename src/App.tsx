@@ -32,7 +32,7 @@ interface complete{
 interface popup{
   enabled:boolean,
   value:string,
-  delay:number
+  delay?:number
 }
 
 const App = () => {
@@ -49,7 +49,7 @@ const App = () => {
   const [currentGuess,setCurrentGuess] = useState<currentGuess>({value:"",code:-1})
   const [displaySuggestion,setDisplaySuggestions] =useState<boolean>(false)
   const [complete,setComplete] = useState<complete>({complete:false,win:false})
-  const [popup,setPopup] = useState<popup>({enabled:false,value:'',delay:0})
+  const [popup,setPopup] = useState<popup>({enabled:false,value:''})
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const countryList:countryType[] = data as countryType[]
@@ -89,8 +89,7 @@ const App = () => {
     });
     if(!win)setPopup({
       value:country.country,
-      enabled: true,
-      delay:2000
+      enabled: true
     })
 
     setStats({
@@ -221,7 +220,7 @@ const App = () => {
           }
           {
             popup.enabled?(
-              <PopUp value={popup.value} delay={popup.delay} toggle={()=>{setPopup({enabled:false,value:'',delay:0})}}/>
+              <PopUp value={popup.value} delay={popup.delay} toggle={()=>{setPopup({enabled:false,value:''})}}/>
             ):null
           }
       </div>
