@@ -180,7 +180,7 @@ const App = () => {
                     //ensures that the user is not forced to click off.
                     inputRef.current?.focus()
                     setDisplaySuggestions(false)
-                  }} key={idx} style={colourPallete}>{country}</li>:null
+                  }} key={idx} style={colourPallete}>{country.country}</li>:null
                 })
               }
             </ul>
