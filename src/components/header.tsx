@@ -7,7 +7,6 @@ import { Fragment, useState } from 'react'
 import SettingsPage from './panels/settingsPage'
 import StatsPage from './panels/statsPage'
 
-//include title,help bar, stats bar(likely future update)
 const Header = () =>{
     const [displayHelp,setDisplayHelp] = useState<boolean>(false)
     const [displaySettings,setDisplaySettings] = useState<boolean>(false)

@@ -1,10 +1,6 @@
 import useTheme from '../../hooks/useTheme'
 import { useSettings }  from '../../hooks/useSettings'
 
-export interface settings{
-    randomRotate:boolean,
-    hideImage:boolean,
-}
 
 interface props{
     toggle: ()=>void;

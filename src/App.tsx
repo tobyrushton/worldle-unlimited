@@ -62,8 +62,8 @@ const App = () => {
     color:theme === 'dark'? '#FFFFFF':'#121212'
   }
 
-  //on initial render generates new country, 23 is place holder currently - add random number generator. 
   useEffect(()=>{
+    //to check if the click is off the input box, allows for it to not display.
     document.addEventListener("mousedown",handleClickOutside)
 
     //places user into input box when they load the site. 
@@ -87,7 +87,7 @@ const App = () => {
       complete:true,
       win:win,
     });
-    if(!win)setPopup({
+    if(!win)setPopup({ //on loss shows the country that it was.
       value:country.country,
       enabled: true
     })
@@ -121,7 +121,7 @@ const App = () => {
           value:'Invalid country',
           delay:1000
         })
-        return
+        return //backs out of function if invalid. 
     }
 
     const guess:countryType = getCountry(current.code)
@@ -173,13 +173,13 @@ const App = () => {
               <ul role='listbox' className='GuessList'>
               {
                 countryList?.map((country:countryType,idx:number)=>{
-                  return country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(currentGuess.value.toLowerCase()) ? <li className='SuggestionBar' onClick={()=>{
+                  return country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(currentGuess.value.toLowerCase()) ? <button className='SuggestionBar' onClick={()=>{
                     setCurrentGuess({value:country.country,code:idx})
                     setDisplaySuggestions(false)
-                    //ensures that the user is not forced to click off.
+                    //ensures that the user is not forced to click off after clicking on a country in the suggestion list. 
                     inputRef.current?.focus()
                     setDisplaySuggestions(false)
-                  }} key={idx} style={colourPallete}>{country.country}</li>:null
+                  }} key={idx} style={colourPallete} tabIndex={0}>{country.country}</button>:null
                 })
               }
             </ul>

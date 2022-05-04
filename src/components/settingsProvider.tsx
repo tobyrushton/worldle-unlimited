@@ -1,6 +1,10 @@
 import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { settings } from "./panels/settingsPage";
+
+interface settings{
+    randomRotate:boolean,
+    hideImage:boolean,
+}
 
 export interface settingsContextInterface{
     settings:settings,

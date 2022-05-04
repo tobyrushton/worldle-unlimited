@@ -142,7 +142,9 @@ a{
 
 .SuggestionBar{
   background-color: white;
+  font-size: 1rem;
   border-radius: .4rem;
+  width: 100%;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   border-style: solid;
