@@ -1,9 +1,12 @@
 import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
+type measurements = "km" | "mi";
+
 interface settings{
     randomRotate:boolean,
     hideImage:boolean,
+    measurement: measurements
 }
 
 export interface settingsContextInterface{
@@ -14,7 +17,7 @@ export interface settingsContextInterface{
 export const SettingsContext = React.createContext<settingsContextInterface| null>(null)
 
 const SettingsProvider: React.FC = ({children}) =>{
-    const [settings,setSettings] = useLocalStorage('settings',{randomRotate:false,hideImage:false})
+    const [settings,setSettings] = useLocalStorage('settings',{randomRotate:false,hideImage:false,measurement:"km" as measurements})
 
     return(
         <SettingsContext.Provider value={{settings,updateSettings:setSettings}}>

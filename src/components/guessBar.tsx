@@ -1,6 +1,7 @@
 import { Guess } from "../App";
 import CSS from 'csstype'
 import { Fragment, useEffect, useState } from "react";
+import { useSettings } from '../hooks/useSettings'
 
 interface GuessBarProps{
     style?:CSS.Properties
@@ -11,6 +12,10 @@ const GuessBar = (props:GuessBarProps) =>{
     const [finished,setFinished] = useState<boolean>(false)
     const [percentage,setPercentage] = useState<number>(0)
     const [max,setMax] = useState<number>(0)
+    const {settings} = useSettings()
+
+    const getMiles = (kilometers:number):number => Math.floor(kilometers*0.6214)
+
     useEffect(()=>{
         if(props.guess.taken){
             setTimeout(()=>{
@@ -69,7 +74,7 @@ const GuessBar = (props:GuessBarProps) =>{
                                     {props.guess.country? props.guess.country.length<15? props.guess.country:props.guess.country.slice(0,15).concat('...'):''}
                                 </div>
                                 <div className="GuessBox" style={{gridColumn:'4/6'}}>
-                                    {props.guess.distance}km
+                                    {settings.measurement === 'mi' && props.guess.distance? getMiles(props.guess.distance).toString().concat(' Miles'): props.guess.distance?.toString().concat(' KM')}
                                 </div>
                                 <div className="GuessBox" style={{gridColumn:'6/7'}}>
                                     {props.guess.direction}

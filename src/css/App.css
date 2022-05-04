@@ -329,3 +329,12 @@ a{
 h3{
   font-family: 'Montserrat', sans-serif;
 }
+
+.selection{
+  font-size: 1rem;
+  font-family: inherit;
+  border-style:none;
+  margin-right: .2rem;
+  color: inherit;
+  background-color: inherit;
+}
