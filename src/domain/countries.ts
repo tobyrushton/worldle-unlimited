@@ -89,10 +89,37 @@ export default class Country{
     getDirectionToCountry(country:countryType):directionEmojis{
         if(this.latitude === country.latitude && this.longitude === country.longitude) return directionArrows['F']
         const getDegree = ():Direction =>{
-            const cardinals:Direction[] = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW","N"]; 
-            const carDirect = (x0:number,y0:number, x1:number,y1:number) => Math.round( Math.atan2((x1-x0),(y1-y0)) * (8 / Math.PI) ); 
-            const cardIndex = (dir:number) => dir<0 ? dir+16 : dir;  
-            return cardinals[cardIndex(carDirect( country.longitude,country.latitude, this.longitude,this.latitude))]
+
+            const toRadians = (degrees:number) =>{
+                return degrees * Math.PI / 180
+            }
+            
+            const toDegrees = (radians:number)=> {
+                return radians * 180 / Math.PI
+            }
+            
+            const getBearing = () => {
+                const startLat = toRadians(country.latitude);
+                const startLng = toRadians(country.longitude);
+                const destLat = toRadians(this.latitude);
+                const destLng = toRadians(this.longitude);
+            
+                const y = Math.sin(destLng - startLng) * Math.cos(destLat);
+                const x = Math.cos(startLat) * Math.sin(destLat) -
+                    Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
+                let brng = Math.atan2(y, x);
+                brng = toDegrees(brng)
+                return Math.round((brng + 360) % 360);
+            }
+            const degree = getBearing()
+            return degree < 5 ? 'N': 
+                degree <95? 
+                degree > 85?'E':'NE':
+                degree < 175? 'SE': 
+                degree < 185? 'S':
+                degree < 265? 'SW':
+                degree < 275? 'W': 
+                degree < 355? 'NW':'N';
         }
         return directionArrows[getDegree()]
     }
