@@ -9,6 +9,7 @@ import useTheme from './hooks/useTheme';
 import PopUp from './components/popUp';
 import useStats from './hooks/useStats';
 import { getRandomInt } from './domain/random';
+import { useQueue } from './hooks/useQueue';
 
 //235 countries in list
 export interface Guess {
@@ -36,7 +37,21 @@ interface popup{
 }
 
 const App = () => {
-  const [country,setCountry] = useState<Country>(new Country(getCountry(getRandomInt(234))))
+
+  const [recentGuesses,updateRecentGuesses] = useQueue()
+
+  //gets new country and makes sure that it is not within previous guesses.
+  const generateNewCountry = ():countryType =>{
+    let temp:number;
+    do{
+      temp = getRandomInt(234)
+    }while(recentGuesses.includes(temp))
+
+    updateRecentGuesses(temp)
+    return getCountry(temp)
+  }
+
+  const [country,setCountry] = useState<Country>(new Country({country:'Unkown',longitude:0,latitude:0,alpha:'NA'}))
   const [guessesUsed,setGuessesUsed] = useState<number>(0)
   const [guesses,setGuesses] = useState<Array<Guess>>(new Array<Guess>(
     {taken:false,country:null,distance:null,direction:null,percentage:null},
@@ -65,6 +80,8 @@ const App = () => {
   useEffect(()=>{
     //to check if the click is off the input box, allows for it to not display.
     document.addEventListener("mousedown",handleClickOutside)
+
+    country.init(generateNewCountry())
 
     //places user into input box when they load the site. 
     inputRef.current?.focus()
@@ -141,7 +158,7 @@ const App = () => {
   }
 
   const handleReset = ():void =>{
-    setCountry(new Country(getCountry(getRandomInt(234))))
+    setCountry(new Country(generateNewCountry()))
     setGuessesUsed(0)
     setGuesses([
       {taken:false,country:null,distance:null,direction:null,percentage:null},

@@ -17,7 +17,7 @@ export interface settingsContextInterface{
 export const SettingsContext = React.createContext<settingsContextInterface| null>(null)
 
 const SettingsProvider: React.FC = ({children}) =>{
-    const [settings,setSettings] = useLocalStorage('settings',{randomRotate:false,hideImage:false,measurement:"km" as measurements})
+    const [settings,setSettings] = useLocalStorage<settings>('settings',{randomRotate:false,hideImage:false,measurement:"km" as measurements})
 
     return(
         <SettingsContext.Provider value={{settings,updateSettings:setSettings}}>

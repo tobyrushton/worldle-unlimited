@@ -118,6 +118,13 @@ export default class Country{
         const maxDistance = 20000; //half the earths circumference
         return Math.floor(((maxDistance-distance)/maxDistance)*100)
     }
+
+    init(country:countryType):void{
+        this.country = country.country
+        this.alpha = country.alpha
+        this.latitude = country.latitude
+        this.longitude = country.longitude
+    }
 }
 
 export const getCountry = (key:number|countries):countryType=>{
