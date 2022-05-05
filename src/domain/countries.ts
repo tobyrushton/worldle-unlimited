@@ -1,4 +1,5 @@
 import data from './countries.json'
+import { getCompassDirection } from 'geolib';
 
 export interface countryType{
     alpha:string,
@@ -9,12 +10,20 @@ export interface countryType{
 
 export type Direction =
     "N"|
+    "NNE"|
     "NE"|
+    "ENE"|
     "E"|
+    "ESE"|
     "SE"|
+    "SSE"|
     "S"|
+    "SSW"|
     "SW"|
+    "WSW"|
     "W"|
+    "WNW"|
+    "NNW"|
     "NW"|
     "F"; // win 
 
@@ -38,12 +47,20 @@ export type countries =
 const directionArrows: Record<Direction, directionEmojis> = {
     N: "⬆️",
     NE: "↗️",
+    NNE: "↗️",
+    ENE: "↗️",
     E: "➡️",
     SE: "↘️",
+    SSE: "↘️",
+    ESE: "↘️",
     S: "⬇️",
     SW: "↙️",
+    SSW: "↙️",
+    WSW: "↙️",
     W: "⬅️",
     NW: "↖️",
+    NNW: "↖️",
+    WNW: "↖️",
     F:"🎉"
 }
 
@@ -75,43 +92,8 @@ export default class Country{
 
     getDirectionToCountry(guess:countryType):directionEmojis{
         if(this.latitude === guess.latitude && this.longitude === guess.longitude) return directionArrows['F']
-        
-        const getDegree = ():Direction =>{
-
-            const toRadians = (degrees:number) =>{
-                return degrees * Math.PI / 180
-            }
-            
-            const toDegrees = (radians:number)=> {
-                return radians * 180 / Math.PI
-            }
-            
-            const getBearing = () => {
-                const startLat = toRadians(guess.latitude);
-                const startLng = toRadians(guess.longitude);
-                const destLat = toRadians(this.latitude);
-                const destLng = toRadians(this.longitude);
-            
-                const y = Math.sin(destLng - startLng) * Math.cos(destLat);
-                const x = Math.cos(startLat) * Math.sin(destLat) -
-                    Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
-                let brng = Math.atan2(y, x);
-                brng = toDegrees(brng)
-                return Math.round((brng + 360) % 360);
-            }
-            const degree = getBearing()
-
-            //allows for a difference either side when returning the direction to the country. (2 degrees each side)
-            return degree < 2 ? 'N': 
-                degree <92? 
-                degree > 88?'E':'NE':
-                degree < 178? 'SE': 
-                degree < 182? 'S':
-                degree < 268? 'SW':
-                degree < 272? 'W': 
-                degree < 358? 'NW':'N';
-        }
-        return directionArrows[getDegree()]
+    
+        return directionArrows[getCompassDirection({latitude: guess.latitude, longitude:guess.longitude},{latitude: this.latitude,longitude: this.longitude})]
     }
 
     getPercentage(distance:number):number{
