@@ -51,7 +51,7 @@ const App = () => {
     return getCountry(temp)
   }
 
-  const [country,setCountry] = useState<Country>(new Country({country:'Unkown',longitude:0,latitude:0,alpha:'NA'}))
+  const [country,setCountry] = useState<Country>(()=>new Country(generateNewCountry()))
   const [guessesUsed,setGuessesUsed] = useState<number>(0)
   const [guesses,setGuesses] = useState<Array<Guess>>(new Array<Guess>(
     {taken:false,country:null,distance:null,direction:null,percentage:null},
@@ -80,8 +80,6 @@ const App = () => {
   useEffect(()=>{
     //to check if the click is off the input box, allows for it to not display.
     document.addEventListener("mousedown",handleClickOutside)
-
-    country.init(generateNewCountry())
 
     //places user into input box when they load the site. 
     inputRef.current?.focus()

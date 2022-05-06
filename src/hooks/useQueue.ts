@@ -12,7 +12,6 @@ export function useQueue():useQueueReturn{
 
     const updateQueue = (num:number) =>{
         queue.enqueue(num)
-        console.log(queue.queue)
         setQueue(new Queue([queue.queue,queue.tail]))
     }
 
