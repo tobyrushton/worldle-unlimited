@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 import './css/App.css';
-import Country, {directionEmojis, getCountry, countryType} from './domain/countries';
+import Country, { getCountry, countryType } from './domain/countries';
 import MapDisplay from './components/mapDisplay';
 import Header from './components/header';
 import GuessBar from './components/guessBar';
@@ -8,27 +8,8 @@ import data from './domain/countries.json'
 import useTheme from './hooks/useTheme';
 import PopUp from './components/popUp';
 import useStats from './hooks/useStats';
-import { getRandomInt } from './domain/random';
-import { useQueue } from './hooks/useQueue';
-
-//235 countries in list
-export interface Guess {
-  taken:boolean,
-  country:string | null,
-  distance:number| null,
-  direction: directionEmojis | null,
-  percentage: number| null,
-}
-
-interface currentGuess{
-  value:string,
-  code:number
-}
-
-interface complete{
-  complete:boolean,
-  win:boolean,
-}
+import { useGame } from './hooks/useGame';
+import { Guess, currentGuess } from './components/gameProvider'
 
 interface popup{
   enabled:boolean,
@@ -37,33 +18,9 @@ interface popup{
 }
 
 const App = () => {
-
-  const [recentGuesses,updateRecentGuesses] = useQueue()
-
-  //gets new country and makes sure that it is not within previous guesses.
-  const generateNewCountry = ():countryType =>{
-    let temp:number;
-    do{
-      temp = getRandomInt(234)
-    }while(recentGuesses.includes(temp))
-
-    updateRecentGuesses(temp)
-    return getCountry(temp)
-  }
-
-  const [country,setCountry] = useState<Country>(()=>new Country(generateNewCountry()))
-  const [guessesUsed,setGuessesUsed] = useState<number>(0)
-  const [guesses,setGuesses] = useState<Array<Guess>>(new Array<Guess>(
-    {taken:false,country:null,distance:null,direction:null,percentage:null},
-    {taken:false,country:null,distance:null,direction:null,percentage:null},
-    {taken:false,country:null,distance:null,direction:null,percentage:null},
-    {taken:false,country:null,distance:null,direction:null,percentage:null},
-    {taken:false,country:null,distance:null,direction:null,percentage:null},
-    {taken:false,country:null,distance:null,direction:null,percentage:null},
-    ))
-  const [currentGuess,setCurrentGuess] = useState<currentGuess>({value:"",code:-1})
+  const {game,setGame} = useGame()
+  const [country,setCountry] = useState<Country>(()=>new Country(getCountry(game.country)))
   const [displaySuggestion,setDisplaySuggestions] =useState<boolean>(false)
-  const [complete,setComplete] = useState<complete>({complete:false,win:false})
   const [popup,setPopup] = useState<popup>({enabled:false,value:''})
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -76,6 +33,10 @@ const App = () => {
     backgroundColor:theme === 'dark'?'#121212':'#FFFFFF',
     color:theme === 'dark'? '#FFFFFF':'#121212'
   }
+  
+  useEffect(()=>{
+    setCountry(new Country(getCountry(game.country)))
+  },[game.country])
 
   useEffect(()=>{
     //to check if the click is off the input box, allows for it to not display.
@@ -98,10 +59,19 @@ const App = () => {
 
 
   const handleComplete =(win:boolean) =>{
-    setComplete({
-      complete:true,
-      win:win,
-    });
+    setGame({
+      country:game.country,
+      guessesUsed:game.guessesUsed,
+      guesses: game.guesses,
+      currentGuess:{
+        value:"",
+        code:-1
+      },
+      complete:{
+        complete:true,
+        win:win
+      }
+    })
     if(!win)setPopup({ //on loss shows the country that it was.
       value:country.country,
       enabled: true
@@ -114,12 +84,12 @@ const App = () => {
       bestStreak:win&&stats.winstreak===stats.bestStreak?stats.bestStreak+1:stats.bestStreak,
       played:stats.played+1,
       attempts:{
-        1:guessesUsed+1===1?stats.attempts[1]+1:stats.attempts[1],
-        2:guessesUsed+1===2?stats.attempts[2]+1:stats.attempts[2],
-        3:guessesUsed+1===3?stats.attempts[3]+1:stats.attempts[3],
-        4:guessesUsed+1===4?stats.attempts[4]+1:stats.attempts[4],
-        5:guessesUsed+1===5?stats.attempts[5]+1:stats.attempts[5],
-        6:guessesUsed+1===6 && win?stats.attempts[6]+1:stats.attempts[6]
+        1:game.guessesUsed+1===1?stats.attempts[1]+1:stats.attempts[1],
+        2:game.guessesUsed+1===2?stats.attempts[2]+1:stats.attempts[2],
+        3:game.guessesUsed+1===3?stats.attempts[3]+1:stats.attempts[3],
+        4:game.guessesUsed+1===4?stats.attempts[4]+1:stats.attempts[4],
+        5:game.guessesUsed+1===5?stats.attempts[5]+1:stats.attempts[5],
+        6:game.guessesUsed+1===6 && win?stats.attempts[6]+1:stats.attempts[6]
       }
     })
   };
@@ -127,8 +97,8 @@ const App = () => {
 
   const handleCountryGuess = ():void =>{
     const current:currentGuess={
-      value:currentGuess.code !== -1? currentGuess.value:countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).includes(currentGuess.value.trim().toLocaleLowerCase())?countryList[countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).indexOf(currentGuess.value.trim().toLowerCase())].country:'',
-      code: currentGuess.code !== -1? currentGuess.code:countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).indexOf(currentGuess.value.trim().toLowerCase())
+      value:game.currentGuess.code !== -1? game.currentGuess.value:countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).includes(game.currentGuess.value.trim().toLocaleLowerCase())?countryList[countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).indexOf(game.currentGuess.value.trim().toLowerCase())].country:'',
+      code: game.currentGuess.code !== -1? game.currentGuess.code:countryList.map((country:countryType)=>country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()).indexOf(game.currentGuess.value.trim().toLowerCase())
     }
     if(current.code===-1){
         setPopup({
@@ -140,33 +110,35 @@ const App = () => {
     }
 
     const guess:countryType = getCountry(current.code)
-    let guessList:Guess[] = [...guesses]
+    let guessList:Guess[] = [...game.guesses]
     const distance = country.getDistanceToCountry(guess)
-    guessList[guessesUsed].taken = true 
-    guessList[guessesUsed].country = current.value;
-    guessList[guessesUsed].distance = distance
-    guessList[guessesUsed].direction = country.getDirectionToCountry(guess)
-    guessList[guessesUsed].percentage = country.getPercentage(distance)
+    guessList[game.guessesUsed].taken = true 
+    guessList[game.guessesUsed].country = current.value;
+    guessList[game.guessesUsed].distance = distance
+    guessList[game.guessesUsed].direction = country.getDirectionToCountry(guess)
+    guessList[game.guessesUsed].percentage = country.getPercentage(distance)
     if(distance === 0) handleComplete(true) //win
-    setGuesses(guessList)
-    setCurrentGuess({value:"",code:-1})
-    setDisplaySuggestions(true)
-    setGuessesUsed(guessesUsed+1)
-    if(guessesUsed+1 === 6 && distance !==0) handleComplete(false) //loss
+    else{ 
+      setGame({
+        country:game.country,
+        guesses: guessList,
+        currentGuess:{
+          value:"",
+          code:-1
+        },
+        guessesUsed:game.guessesUsed+1,
+        complete:{
+          complete:false,
+          win:false
+        }
+      })
+      setDisplaySuggestions(true)
+  }
+    if(game.guessesUsed+1 === 6 && distance !==0) handleComplete(false) //loss
   }
 
   const handleReset = ():void =>{
-    setCountry(new Country(generateNewCountry()))
-    setGuessesUsed(0)
-    setGuesses([
-      {taken:false,country:null,distance:null,direction:null,percentage:null},
-      {taken:false,country:null,distance:null,direction:null,percentage:null},
-      {taken:false,country:null,distance:null,direction:null,percentage:null},
-      {taken:false,country:null,distance:null,direction:null,percentage:null},
-      {taken:false,country:null,distance:null,direction:null,percentage:null},
-      {taken:false,country:null,distance:null,direction:null,percentage:null},
-    ])
-    setComplete({complete:false,win:false})
+    setGame('new')
   }
 
   return (
@@ -179,21 +151,32 @@ const App = () => {
         }}/>
         <div className='GuessWrapper'>
             <div className="GuessGrid">
-            {guesses.map((guess:Guess,idx:number)=>{
+            {game.guesses.map((guess:Guess,idx:number)=>{
                   return <GuessBar style={{gridColumn:'1/8'}} guess={guess} key={idx}/>
                 })}
             </div>
           <Fragment>
-            {displaySuggestion && currentGuess.value!==""?(
+            {displaySuggestion && game.currentGuess.value!==""?(
               <ul role='listbox' className='GuessList'>
               {
                 countryList?.map((country:countryType,idx:number)=>{
-                  return country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(currentGuess.value.toLowerCase()) ? <button className='SuggestionBar' onClick={()=>{
-                    setCurrentGuess({value:country.country,code:idx})
-                    setDisplaySuggestions(false)
-                    //ensures that the user is not forced to click off after clicking on a country in the suggestion list. 
-                    inputRef.current?.focus()
-                    setDisplaySuggestions(false)
+                  return country.country.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(game.currentGuess.value.toLowerCase()) ? 
+                  <button className='SuggestionBar' 
+                    onClick={()=>{
+                      setGame({
+                        country:game.country,
+                        guessesUsed:game.guessesUsed,
+                        guesses:game.guesses,
+                        complete: game.complete,
+                        currentGuess:{
+                          value: country.country,
+                          code:-1
+                        }
+                      })
+                      setDisplaySuggestions(false)
+                      //ensures that the user is not forced to click off after clicking on a country in the suggestion list. 
+                      inputRef.current?.focus()
+                      setDisplaySuggestions(false)
                   }} key={idx} style={colourPallete} tabIndex={0}>{country.country}</button>:null
                 })
               }
@@ -203,11 +186,11 @@ const App = () => {
             </Fragment>
           </div>
           {
-            complete.complete?(
+            game.complete.complete?(
               <Fragment>
                 <div className='CompleteBar'style={{
-                  backgroundColor:complete.win?'#22C55E':'#FF3800',
-                }}>{complete.win?'CONGRATS!':'UNLUCKY'}</div>
+                  backgroundColor:game.complete.win?'#22C55E':'#FF3800',
+                }}>{game.complete.win?'CONGRATS!':'UNLUCKY'}</div>
                 <div className="CompleteBar"style={{
                   backgroundColor:'#24A0ED',
                   marginTop:'1%',
@@ -217,14 +200,23 @@ const App = () => {
               </Fragment>
             ):(   
             <form>
-              <input ref={inputRef} className='GuessInput' placeholder='Country or Territory' value={currentGuess.value} onSubmit={(e:React.SyntheticEvent)=>{
+              <input ref={inputRef} className='GuessInput' placeholder='Country or Territory' value={game.currentGuess.value} onSubmit={(e:React.SyntheticEvent)=>{
                 e.preventDefault()
                 handleCountryGuess()
               }} onFocus={()=>{
                 setDisplaySuggestions(true)
               }}
               onChange={(e:React.BaseSyntheticEvent)=>{
-                setCurrentGuess({value:e.target.value,code:-1})
+                setGame({
+                  country:game.country,
+                  guessesUsed:game.guessesUsed,
+                  guesses:game.guesses,
+                  complete: game.complete,
+                  currentGuess:{
+                    value: e.target.value,
+                    code:-1
+                  }
+                })
               }} style={colourPallete}/>
               <button className='GuessSubmit' onClick={(e:React.SyntheticEvent)=>{
                   e.preventDefault()

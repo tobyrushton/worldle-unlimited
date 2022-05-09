@@ -1,5 +1,5 @@
 import GuessBar from "../guessBar";
-import {Guess} from '../../App'
+import {Guess} from '../gameProvider'
 import Country, { getCountry } from '../../domain/countries'
 
 interface props{
