@@ -1,6 +1,6 @@
 import React from "react"
-import useLocalStorage from "../hooks/useLocalStorage"
-import { statsInterface } from "./panels/statsPage"
+import useLocalStorage from "../../hooks/useLocalStorage"
+import { statsInterface } from "../panels/statsPage"
 
 export interface statsContextInterface{
     stats: statsInterface

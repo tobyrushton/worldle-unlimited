@@ -1,5 +1,5 @@
 import React from'react'
-import { useCreateTheme } from '../hooks/useCreateTheme';
+import { useCreateTheme } from '../../hooks/useCreateTheme';
 
 type Theme = 'light' | 'dark';
 export type ThemeContextType = {

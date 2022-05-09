@@ -1,4 +1,4 @@
-import { Guess } from "./gameProvider";
+import { Guess } from "./providers/gameProvider";
 import CSS from 'csstype'
 import { Fragment, useEffect, useState } from "react";
 import { useSettings } from '../hooks/useSettings'

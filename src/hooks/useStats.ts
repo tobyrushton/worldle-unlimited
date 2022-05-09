@@ -1,4 +1,4 @@
-import { StatsContext, statsContextInterface } from "../components/statsProvider";
+import { StatsContext, statsContextInterface } from "../components/providers/statsProvider";
 import { useContext } from "react";
 
 export default function useStats():statsContextInterface{

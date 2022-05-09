@@ -1,8 +1,8 @@
 import React from "react";
-import { countries, getCountry, countryType, directionEmojis } from "../domain/countries";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { useQueue } from '../hooks/useQueue'
-import { getRandomInt } from '../domain/random'
+import { countries, getCountry, countryType, directionEmojis } from "../../domain/countries";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useQueue } from '../../hooks/useQueue'
+import { getRandomInt } from '../../domain/random'
 
 export interface Guess {
     taken:boolean,
