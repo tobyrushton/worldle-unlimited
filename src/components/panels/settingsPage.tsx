@@ -36,7 +36,7 @@ const SettingsPage = ({toggle}:props)=>{
                 Colour mode
             </p>
             <p className="setting">
-                <select id="settings-measurement" className="selection" defaultValue ={settings.measurement === 'mi'? 'mi':'km'} onChange={(event:React.BaseSyntheticEvent)=>setSettings({randomRotate:settings.randomRotate,hideImage:settings.hideImage,measurement:event.target.value})}>
+                <select id="settings-measurement" className="selection" defaultValue ={settings.measurement === 'mi'? 'mi':'km'} onChange={(event:React.BaseSyntheticEvent)=>setSettings({randomRotate:settings.randomRotate,hideImage:settings.hideImage,measurement:event.target.value,smallCountriesDisabled:settings.smallCountriesDisabled})}>
                     <option value="km" style={optionStyles}>KM</option>
                     <option value="mi" style={optionStyles}>Miles</option>
                 </select>
@@ -51,12 +51,16 @@ const SettingsPage = ({toggle}:props)=>{
                     Difficulty Modifiers
                 </h3>
                 <div className="setting">
-                    <input type="checkbox" checked={settings.hideImage} onChange={()=>setSettings({randomRotate:settings.randomRotate,hideImage:!settings.hideImage, measurement: settings.measurement})}/>
+                    <input type="checkbox" checked={settings.hideImage} onChange={()=>setSettings({randomRotate:settings.randomRotate,hideImage:!settings.hideImage, measurement: settings.measurement,smallCountriesDisabled:settings.smallCountriesDisabled})}/>
                     Hide country image
                 </div>
                 <div className="setting" style={{marginTop:'.5rem'}}>
-                    <input type="checkbox" checked={settings.randomRotate} onChange={()=>setSettings({randomRotate:!settings.randomRotate,hideImage:settings.hideImage, measurement: settings.measurement})}/>
+                    <input type="checkbox" checked={settings.randomRotate} onChange={()=>setSettings({randomRotate:!settings.randomRotate,hideImage:settings.hideImage, measurement: settings.measurement,smallCountriesDisabled:settings.smallCountriesDisabled})}/>
                     Randomly rotate country image
+                </div>
+                <div className="setting" style={{marginTop:'.5rem'}}>
+                    <input type="checkbox" checked={settings.smallCountriesDisabled} onChange={()=>setSettings({randomRotate:settings.randomRotate,hideImage:settings.hideImage,measurement:settings.measurement,smallCountriesDisabled:!settings.smallCountriesDisabled})}/>
+                    Hide countries with area under 5000KM
                 </div>
             </div>
         </div>

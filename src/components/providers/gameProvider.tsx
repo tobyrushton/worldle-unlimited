@@ -3,6 +3,7 @@ import { countries, getCountry, countryType, directionEmojis } from "../../domai
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useQueue } from '../../hooks/useQueue'
 import { getRandomInt } from '../../domain/random'
+import { useSettings } from "../../hooks/useSettings";
 
 export interface Guess {
     taken:boolean,
@@ -39,12 +40,15 @@ export const GameContext = React.createContext<gameContextInterface| null>(null)
 
 const GameProvider: React.FC = ({children}) =>{
     const [recentGuesses, updateRecentGuesses] = useQueue()
+    const {settings} = useSettings()
 
     const generateNewCountry = ():countryType =>{
         let temp:number;
         do{
           temp = getRandomInt(234)
-        }while(recentGuesses.includes(temp))
+        }while(recentGuesses.includes(temp) || 
+            (settings.smallCountriesDisabled? getCountry(temp).area <= 5000 : false)
+        )
     
         updateRecentGuesses(temp)
         return getCountry(temp)

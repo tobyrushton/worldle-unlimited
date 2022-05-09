@@ -5,7 +5,8 @@ export interface countryType{
     alpha:string,
     country:countries,
     longitude:number,
-    latitude:number
+    latitude:number,
+    area:number
 }
 
 export type Direction =
@@ -112,6 +113,7 @@ export const getCountry = (key:number|countries):countryType=>{
         country:'Unkown',
         latitude: 0,
         longitude: 0,
-        alpha: 'NA'
+        alpha: 'NA',
+        area:0
     } //else return incase of an error.
 }
