@@ -9,4 +9,5 @@ As I created this project to learn and expand my skills in typescript I am open 
 ## Sources
 
 images -> https://github.com/djaiss/mapsicon <br/>
-country data -> https://github.com/eesur/country-codes-lat-long
+country data -> https://github.com/eesur/country-codes-lat-long <br/>
+countries area -> https://github.com/samayo/country-json
