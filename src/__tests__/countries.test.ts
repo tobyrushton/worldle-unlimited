@@ -16,17 +16,17 @@ test('get country by index',()=>{
 
 test('get distance to country', ()=>{
     const country = new Country(getCountry('United Kingdom'))
-    expect(country.getDistanceToCountry({country: 'Afghanistan', alpha: 'AF', latitude: 33, longitude: 65})).toBe(5638)
-    expect(country.getDistanceToCountry({country: 'Antigua and Barbuda', alpha: 'AG', latitude: 17.05, longitude: -61.8})).toBe(6524)
-    expect(country.getDistanceToCountry({country: 'Australia', alpha: 'AU', latitude: -27, longitude: 133})).toBe(15292)
-    expect(country.getDistanceToCountry({country: 'Serbia', alpha: 'RS', latitude: 44, longitude: 21})).toBe(1998)
-    expect(country.getDistanceToCountry({country:"United Kingdom",alpha:"GB",latitude:54,longitude:-2})).toBe(0)
+    expect(country.getDistanceToCountry({country: 'Afghanistan', alpha: 'AF', latitude: 33, longitude: 65,area:652090})).toBe(5638)
+    expect(country.getDistanceToCountry({country: 'Antigua and Barbuda', alpha: 'AG', latitude: 17.05, longitude: -61.8,area:442})).toBe(6524)
+    expect(country.getDistanceToCountry({country: 'Australia', alpha: 'AU', latitude: -27, longitude: 133,area:7741220})).toBe(15292)
+    expect(country.getDistanceToCountry({country: 'Serbia', alpha: 'RS', latitude: 44, longitude: 21,area:88361})).toBe(1998)
+    expect(country.getDistanceToCountry({country:"United Kingdom",alpha:"GB",latitude:54,longitude:-2,area:242900})).toBe(0)
 })
 
 test('get direction to country', ()=>{
     const country = new Country(getCountry('Fiji'))
-    expect(country.getDirectionToCountry({country: 'Fiji', alpha: 'FJ', latitude: -18, longitude: 175})).toBe('🎉')
-    expect(country.getDirectionToCountry({country:"New Zealand",alpha:"NZ",latitude:-41,longitude:174})).toBe('⬆️')
-    expect(country.getDirectionToCountry({country:"Australia",alpha:"AU",latitude:-27,longitude:133})).toBe('↗️')
-    expect(country.getDirectionToCountry({country:"Cook Islands",alpha:"CK",latitude:-21.2333,longitude:-159.7667})).toBe('⬅️')
+    expect(country.getDirectionToCountry({country: 'Fiji', alpha: 'FJ', latitude: -18, longitude: 175,area:18274})).toBe('🎉')
+    expect(country.getDirectionToCountry({country:"New Zealand",alpha:"NZ",latitude:-41,longitude:174,area:270534})).toBe('⬆️')
+    expect(country.getDirectionToCountry({country:"Australia",alpha:"AU",latitude:-27,longitude:133,area:83859})).toBe('↗️')
+    expect(country.getDirectionToCountry({country:"Cook Islands",alpha:"CK",latitude:-21.2333,longitude:-159.7667,area:236})).toBe('⬅️')
 })
