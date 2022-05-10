@@ -256,7 +256,7 @@ const Game: React.FC = () => {
                                                 guesses: game.guesses,
                                                 complete: game.complete,
                                                 currentGuess: {
-                                                    value: country.country,
+                                                    value: countryItem.country,
                                                     code: -1,
                                                 },
                                             })
