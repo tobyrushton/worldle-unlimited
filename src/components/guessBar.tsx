@@ -1,96 +1,126 @@
-import { Guess } from "./providers/gameProvider";
 import CSS from 'csstype'
-import { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
+import { Guess } from './providers/gameProvider'
 import { useSettings } from '../hooks/useSettings'
 
-interface GuessBarProps{
-    style?:CSS.Properties
-    guess:Guess
+interface GuessBarProps {
+    style?: CSS.Properties
+    guess: Guess
 }
 
-const GuessBar = (props:GuessBarProps) =>{
-    const [finished,setFinished] = useState<boolean>(false)
-    const [percentage,setPercentage] = useState<number>(0)
-    const [max,setMax] = useState<number>(0)
-    const {settings} = useSettings()
+const GuessBar: React.FC<GuessBarProps> = ({ style, guess }) => {
+    const [finished, setFinished] = useState<boolean>(false)
+    const [percentage, setPercentage] = useState<number>(0)
+    const [max, setMax] = useState<number>(0)
+    const { settings } = useSettings()
 
-    const getMiles = (kilometers:number):number => Math.floor(kilometers*0.6214)
+    const getMiles = (kilometers: number): number =>
+        Math.floor(kilometers * 0.6214)
 
-    useEffect(()=>{
-        if(props.guess.taken){
-            setTimeout(()=>{
+    useEffect(() => {
+        if (guess.taken) {
+            setTimeout(() => {
                 setFinished(true)
-            },1250);
-            const max:number = props.guess.percentage?props.guess.percentage:0;
-            const wait:number = 1000/max;
-            for(let i =0;i<max;i++){
-                setTimeout(()=>{
-                    setPercentage((lastPercent:number)=>lastPercent+1)
-                },wait*i)
+            }, 1250)
+            const maxPercent: number = guess.percentage ? guess.percentage : 0
+            const wait: number = 1000 / maxPercent
+            for (let i = 0; i < maxPercent; i++) {
+                setTimeout(() => {
+                    setPercentage((lastPercent: number) => lastPercent + 1)
+                }, wait * i)
             }
-        }
-        else {
+        } else {
             setFinished(false)
             setPercentage(0)
         }
 
-        setMax(props.guess.percentage?props.guess.percentage/100:0)
-    },[props.guess.taken,props.guess.percentage])
+        setMax(guess.percentage ? guess.percentage / 100 : 0)
+    }, [guess.taken, guess.percentage])
 
     return (
-        <Fragment>
-            {props.guess.taken?(
-                <Fragment>
-                    {
-                        !finished?(
-                            <Fragment>
-                                <div className="GuessBox" style={{gridColumn:'1/7'}}>
-                                    <div style={{
-                                        backgroundColor:'lightgray',
-                                        height:'1vh',
-                                        width:'75%',
-                                        position:'absolute',
-                                        left:'5%'
-                                    }}/>
-                                    <div style={{
-                                        backgroundColor:'green',
-                                        animation:'linedown 1.5s forwards',
-                                        height:'1vh',
-                                        width:'0',
-                                        position:'absolute',
-                                        left:'5%',
-                                        maxWidth:'calc(75%*'+max+')',
-                                    }}/>
-                                </div>
-                                <div className='GuessBox' style={{
-                                    gridColumn:'7/8'
-                                }}>
-                                    {percentage}%
-                                </div>
-                            </Fragment>
-                        ):(
-                            <Fragment>
-                                <div className="GuessBox" style={{gridColumn:'1/4'}}>
-                                    {props.guess.country? props.guess.country.length<15? props.guess.country:props.guess.country.slice(0,15).concat('...'):''}
-                                </div>
-                                <div className="GuessBox" style={{gridColumn:'4/6'}}>
-                                    {settings.measurement === 'mi' && props.guess.distance? getMiles(props.guess.distance).toString().concat(' Miles'): props.guess.distance?.toString().concat(' KM')}
-                                </div>
-                                <div className="GuessBox" style={{gridColumn:'6/7'}}>
-                                    {props.guess.direction}
-                                </div>
-                                <div className="GuessBox" style={{gridColumn:'7/8'}}>
-                                    {props.guess.percentage}%
-                                </div>
-                            </Fragment>
-                        )
-                    }
-                </Fragment> 
-            ):
-                <div className="GuessBar" style={props.style} />
-            }
-        </Fragment>
+        <>
+            {guess.taken ? (
+                <>
+                    {!finished ? (
+                        <>
+                            <div
+                                className="GuessBox"
+                                style={{ gridColumn: '1/7' }}
+                            >
+                                <div
+                                    style={{
+                                        backgroundColor: 'lightgray',
+                                        height: '1vh',
+                                        width: '75%',
+                                        position: 'absolute',
+                                        left: '5%',
+                                    }}
+                                />
+                                <div
+                                    style={{
+                                        backgroundColor: 'green',
+                                        animation: 'linedown 1.5s forwards',
+                                        height: '1vh',
+                                        width: '0',
+                                        position: 'absolute',
+                                        left: '5%',
+                                        maxWidth: `calc(75%*${max})`,
+                                    }}
+                                />
+                            </div>
+                            <div
+                                className="GuessBox"
+                                style={{
+                                    gridColumn: '7/8',
+                                }}
+                            >
+                                {percentage}%
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div
+                                className="GuessBox"
+                                style={{ gridColumn: '1/4' }}
+                            >
+                                {guess.country
+                                    ? guess.country.length < 15
+                                        ? guess.country
+                                        : guess.country
+                                              .slice(0, 15)
+                                              .concat('...')
+                                    : ''}
+                            </div>
+                            <div
+                                className="GuessBox"
+                                style={{ gridColumn: '4/6' }}
+                            >
+                                {settings.measurement === 'mi' && guess.distance
+                                    ? getMiles(guess.distance)
+                                          .toString()
+                                          .concat(' Miles')
+                                    : guess.distance?.toString().concat(' KM')}
+                            </div>
+                            <div
+                                className="GuessBox"
+                                style={{ gridColumn: '6/7' }}
+                            >
+                                {guess.direction}
+                            </div>
+                            <div
+                                className="GuessBox"
+                                style={{ gridColumn: '7/8' }}
+                            >
+                                {guess.percentage}%
+                            </div>
+                        </>
+                    )}
+                </>
+            ) : (
+                <div className="GuessBar" style={style} />
+            )}
+        </>
     )
 }
 
-export default GuessBar;
+export default GuessBar
