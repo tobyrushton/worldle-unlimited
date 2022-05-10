@@ -125,7 +125,7 @@ const GameProvider: React.FC = ({ children }) => {
             },
             guessesUsed: 0,
         }),
-        [generateNewCountry]
+        [country]
     )
 
     const [game, setGame] = useLocalStorage<gameStorage>(
@@ -140,7 +140,7 @@ const GameProvider: React.FC = ({ children }) => {
                 setGame(defaultGameStorage)
             } else setGame(gameItem)
         },
-        [defaultGameStorage, setGame]
+        [defaultGameStorage, setGame, generateNewCountry]
     )
 
     const providerValue: gameContextInterface = useMemo(
