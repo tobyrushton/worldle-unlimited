@@ -309,7 +309,8 @@ const directionArrows: Record<Direction, directionEmojis> = {
     F: '🎉',
 }
 
-// allows an instance of the country to be created with attached methods getDistance and getDireciton.
+// allows an instance of the country to be created with
+// attached methods getDistance and getDirection and getPercentage
 export default class Country {
     alpha: string
 
@@ -327,7 +328,8 @@ export default class Country {
     }
 
     getDistanceToCountry(country: countryType): number {
-        // using haversines formula to calculate the distance between the two countries using the longitudes and latitudes
+        // using haversines formula to calculate the distance
+        // between the two countries using the longitudes and latitudes
         const p = 0.017453292519943295
         const c = Math.cos
         const a =
@@ -370,7 +372,8 @@ export const getCountry = (key: number | countries): countryType => {
 
     if (typeof key === 'number') return json[key]
 
-    // incase country is being searched, finds the country in json list else returns a country labelled unkown.
+    // incase country is being searched, finds the country in
+    // json list else returns a country labelled unkown.
     return (
         json.find(({ country }: countryType) => country === key) || {
             country: 'Unkown',

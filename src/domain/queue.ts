@@ -1,5 +1,7 @@
-// circular queue created in order to store the most recent countries that have appeared in order to improve randomness
-// simplified version of a queue i created in my cs class (only contains enqueue methods as there is no need to ever remove from this queue)
+// circular queue created in order to store the most recent countries that
+// have appeared in order to improve randomness
+// simplified version of a queue i created in my cs class
+// (only contains enqueue methods as there is no need to ever remove from this queue)
 // just overwrites the data in the queue and no need to worry about the queue being full.
 // no head variable as there no need to track this due to the simplified nature.
 
@@ -17,8 +19,10 @@ export class Queue {
 
     enqueue(countryID: number): void {
         this.queue[this.tail] = countryID
-        this.tail = this.tail === this.limit - 1 ? 0 : this.tail + 1 // increments the tail of the queue accoridngly
+        // increments the tail of the queue accoridngly
+        this.tail = this.tail === this.limit - 1 ? 0 : this.tail + 1
     }
 
-    includes = (num: number): boolean => this.queue.includes(num) // simple includes function to know if a number is inside the queue.
+    // simple includes function to know if a number is inside the queue.
+    includes = (num: number): boolean => this.queue.includes(num)
 }

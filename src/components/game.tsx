@@ -261,7 +261,9 @@ const Game: React.FC = () => {
                                                 },
                                             })
                                             setDisplaySuggestions(false)
-                                            // ensures that the user is not forced to click off after clicking on a country in the suggestion list.
+                                            // ensures that the user is not forced to
+                                            // click off after clicking on a
+                                            // country in the suggestion list.
                                             inputRef.current?.focus()
                                             setDisplaySuggestions(false)
                                         }}

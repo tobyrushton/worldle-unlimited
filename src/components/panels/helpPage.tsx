@@ -70,10 +70,6 @@ const HelpPage: React.FC<props> = ({ toggle }) => {
             </div>
             <div className="HelpText">
                 <p style={{ fontWeight: 'bold' }}>Examples</p>
-                {/* 
-                    code, distance and direction are temporary, must be updated - make sure to update.
-                    GuessBar element is not yet complteted, must come back to this once completed to finish the help page
-                */}
                 <div className="GuessGrid" style={{ padding: 0 }}>
                     <GuessBar guess={firstGuess} />
                 </div>
