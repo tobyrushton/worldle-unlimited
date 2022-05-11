@@ -19,8 +19,8 @@ const Timer: React.FC<timerProps> = ({ enabled, reset }) => {
 
     const updateTimer = useCallback((): void => {
         setTimer({
-            minutes: timer.seconds === 60 ? timer.minutes + 1 : timer.minutes,
-            seconds: timer.seconds === 60 ? 0 : timer.seconds + 1,
+            minutes: timer.seconds === 59 ? timer.minutes + 1 : timer.minutes,
+            seconds: timer.seconds === 59 ? 0 : timer.seconds + 1,
         })
     }, [timer.seconds, timer.minutes])
 

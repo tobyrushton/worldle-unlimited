@@ -8,7 +8,7 @@
 export class Queue {
     tail: number // end of the queue.
 
-    limit = 25 // length 25, stores up to the last 25 guesses.
+    limit = 50 // length 50, stores up to the last 50 guesses.
 
     queue: Array<number>
 
