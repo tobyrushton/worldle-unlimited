@@ -9,7 +9,7 @@ interface props {
 
 const SettingsPage: React.FC<props> = ({ toggle }: props) => {
     const { theme, changeTheme } = useTheme()
-    const { settings, updateSettings: setSettings } = useSettings()
+    const { settings, setSettings } = useSettings()
 
     const optionStyles: CSS.Properties = {
         backgroundColor: theme === 'light' ? 'white' : 'black',
@@ -69,6 +69,7 @@ const SettingsPage: React.FC<props> = ({ toggle }: props) => {
                             measurement: event.target.value,
                             smallCountriesDisabled:
                                 settings.smallCountriesDisabled,
+                            enableTimer: settings.enableTimer,
                         })
                     }
                 >
@@ -80,6 +81,23 @@ const SettingsPage: React.FC<props> = ({ toggle }: props) => {
                     </option>
                 </select>
                 Unit of measurement
+            </p>
+            <p className="setting">
+                <input
+                    type="checkbox"
+                    checked={settings.enableTimer ?? false}
+                    onChange={() =>
+                        setSettings({
+                            randomRotate: settings.randomRotate,
+                            hideImage: settings.hideImage,
+                            measurement: settings.measurement,
+                            smallCountriesDisabled:
+                                settings.smallCountriesDisabled,
+                            enableTimer: !settings.enableTimer,
+                        })
+                    }
+                />
+                Enable timer.
             </p>
 
             <div
@@ -100,6 +118,7 @@ const SettingsPage: React.FC<props> = ({ toggle }: props) => {
                                 measurement: settings.measurement,
                                 smallCountriesDisabled:
                                     settings.smallCountriesDisabled,
+                                enableTimer: settings.enableTimer,
                             })
                         }
                     />
@@ -116,6 +135,7 @@ const SettingsPage: React.FC<props> = ({ toggle }: props) => {
                                 measurement: settings.measurement,
                                 smallCountriesDisabled:
                                     settings.smallCountriesDisabled,
+                                enableTimer: settings.enableTimer,
                             })
                         }
                     />
@@ -132,10 +152,11 @@ const SettingsPage: React.FC<props> = ({ toggle }: props) => {
                                 measurement: settings.measurement,
                                 smallCountriesDisabled:
                                     !settings.smallCountriesDisabled,
+                                enableTimer: settings.enableTimer,
                             })
                         }
                     />
-                    Hide countries with area under 5000KM
+                    Hide countries with an area under 5000KM
                 </div>
             </div>
         </div>

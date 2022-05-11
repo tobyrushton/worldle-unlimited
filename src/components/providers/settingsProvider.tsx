@@ -8,11 +8,12 @@ interface settings {
     hideImage: boolean
     measurement: measurements
     smallCountriesDisabled: boolean
+    enableTimer?: boolean
 }
 
 export interface settingsContextInterface {
     settings: settings
-    updateSettings: (settings: settings) => void
+    setSettings: (settings: settings | (() => settings)) => void
 }
 
 export const SettingsContext =
@@ -27,7 +28,7 @@ const SettingsProvider: React.FC = ({ children }) => {
     })
 
     const providerValue: settingsContextInterface = useMemo(
-        () => ({ settings, updateSettings: setSettings }),
+        () => ({ settings, setSettings }),
         [settings, setSettings]
     )
 

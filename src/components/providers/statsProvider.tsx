@@ -4,7 +4,7 @@ import { statsInterface } from '../panels/statsPage'
 
 export interface statsContextInterface {
     stats: statsInterface
-    updateStats: (stats: statsInterface) => void
+    setStats: (stats: statsInterface) => void
 }
 
 export const StatsContext = React.createContext<statsContextInterface | null>(
@@ -22,7 +22,7 @@ const StatsProvider: React.FC = ({ children }) => {
     })
 
     const providerValue: statsContextInterface = useMemo(
-        () => ({ stats, updateStats: setStats }),
+        () => ({ stats, setStats }),
         [stats, setStats]
     )
 

@@ -29,7 +29,7 @@ const Game: React.FC = () => {
     const countryList: countryType[] = data as countryType[]
 
     const { theme } = useTheme()
-    const { stats, updateStats: setStats } = useStats()
+    const { stats, setStats } = useStats()
 
     const colourPallete: CSS.Properties = {
         backgroundColor: theme === 'dark' ? '#121212' : '#FFFFFF',
