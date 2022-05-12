@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface props {
     value: string
@@ -7,7 +7,10 @@ interface props {
 }
 
 const PopUp: React.FC<props> = ({ value, toggle, delay }: props) => {
-    if (delay) setTimeout(toggle, delay)
+    useEffect(() => {
+        if (delay) setTimeout(toggle, delay)
+    }, [delay])
+
     return (
         <div className="popUp wobble animated" role="dialog">
             <div
