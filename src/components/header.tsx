@@ -61,7 +61,10 @@ const Header: React.FC = () => {
                         onClick={toggleHelp}
                         tabIndex={0}
                     >
-                        ❓
+                        <img
+                            src="https://twemoji.maxcdn.com/v/latest/svg/2753.svg"
+                            alt="❓"
+                        />
                     </div>
                 </div>
                 {displayTimer ? (
@@ -81,7 +84,10 @@ const Header: React.FC = () => {
                         onClick={toggleStats}
                         tabIndex={0}
                     >
-                        📈
+                        <img
+                            src="https://twemoji.maxcdn.com/v/latest/svg/1f4c8.svg"
+                            alt="📈"
+                        />
                     </div>
                     <div
                         className="Icon"
@@ -89,7 +95,10 @@ const Header: React.FC = () => {
                         onClick={toggleSettings}
                         tabIndex={0}
                     >
-                        ⚙️
+                        <img
+                            src="https://twemoji.maxcdn.com/v/latest/svg/2699.svg"
+                            alt="⚙️"
+                        />
                     </div>
                 </div>
             </div>

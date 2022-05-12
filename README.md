@@ -10,4 +10,5 @@ As I created this project to learn and expand my skills in typescript I am open 
 
 images -> https://github.com/djaiss/mapsicon <br/>
 country data -> https://github.com/eesur/country-codes-lat-long <br/>
-countries area -> https://github.com/samayo/country-json
+countries area -> https://github.com/samayo/country-json <br/>
+Emojis -> https://github.com/twitter/twemoji

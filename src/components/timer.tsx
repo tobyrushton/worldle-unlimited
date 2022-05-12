@@ -61,7 +61,19 @@ const Timer: React.FC<timerProps> = ({ enabled, reset }) => {
                 onClick={() => setPaused((prevPaused: boolean) => !prevPaused)}
                 tabIndex={0}
             >
-                {paused ? '▶️' : '⏸'}
+                {paused ? (
+                    <img
+                        src="https://twemoji.maxcdn.com/v/latest/svg/25b6.svg"
+                        alt="▶️"
+                        className="Icon"
+                    />
+                ) : (
+                    <img
+                        src="https://twemoji.maxcdn.com/v/latest/svg/23f8.svg"
+                        alt="⏸"
+                        className="Icon"
+                    />
+                )}
             </div>
         </div>
     )
