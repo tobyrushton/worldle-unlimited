@@ -11,6 +11,7 @@ export interface timerProps {
 }
 
 const Timer: React.FC<timerProps> = ({ enabled, reset }) => {
+    const [paused, setPaused] = useState<boolean>(false)
     const [timer, setTimer] = useState<time>({
         minutes: 0,
         seconds: 0,
@@ -25,11 +26,12 @@ const Timer: React.FC<timerProps> = ({ enabled, reset }) => {
     }, [timer.seconds, timer.minutes])
 
     useEffect(() => {
-        if (enabled) interval.current = window.setInterval(updateTimer, 1000)
-        else window.clearInterval(interval.current || 0)
+        if (enabled && !paused)
+            interval.current = window.setInterval(updateTimer, 1000)
+        else if (!enabled || paused) window.clearInterval(interval.current || 0)
 
         return () => window.clearInterval(interval.current || 0)
-    }, [enabled, updateTimer])
+    }, [enabled, updateTimer, paused])
 
     useEffect(() => {
         if (reset) {
@@ -49,6 +51,18 @@ const Timer: React.FC<timerProps> = ({ enabled, reset }) => {
             {timer.seconds < 10
                 ? '0'.concat(timer.seconds.toString())
                 : timer.seconds}
+            <div
+                role="button"
+                style={{
+                    cursor: 'pointer',
+                    display: 'inline-block',
+                    marginLeft: '1rem',
+                }}
+                onClick={() => setPaused((prevPaused: boolean) => !prevPaused)}
+                tabIndex={0}
+            >
+                {paused ? '▶️' : '⏸'}
+            </div>
         </div>
     )
 }
