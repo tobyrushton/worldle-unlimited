@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import CSS from 'csstype'
 import Country, { getCountry, countryType } from '../domain/countries'
 import MapDisplay from './mapDisplay'
@@ -205,6 +205,10 @@ const Game: React.FC = () => {
         setGame('new')
     }
 
+    const togglePopUp = useCallback(() => {
+        setPopup({ enabled: false, value: '' })
+    }, [])
+
     return (
         <div className="wrapper" style={colourPallete}>
             <div className="Container" ref={containerRef}>
@@ -351,9 +355,7 @@ const Game: React.FC = () => {
                     <PopUp
                         value={popup.value}
                         delay={popup.delay}
-                        toggle={() => {
-                            setPopup({ enabled: false, value: '' })
-                        }}
+                        toggle={togglePopUp}
                     />
                 ) : null}
             </div>

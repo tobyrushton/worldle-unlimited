@@ -9,7 +9,7 @@ interface props {
 const PopUp: React.FC<props> = ({ value, toggle, delay }: props) => {
     useEffect(() => {
         if (delay) setTimeout(toggle, delay)
-    }, [delay])
+    }, [delay, toggle])
 
     return (
         <div className="popUp wobble animated" role="dialog">
