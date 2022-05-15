@@ -1,10 +1,5 @@
 import React, { useMemo, useCallback, useState } from 'react'
-import {
-    countries,
-    getCountry,
-    countryType,
-    directionEmojis,
-} from '../../domain/countries'
+import { getCountry, directionEmojis } from '../../domain/countries'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import { useQueue } from '../../hooks/useQueue'
 import { getRandomInt } from '../../domain/random'
@@ -29,7 +24,7 @@ interface complete {
 }
 
 interface gameStorage {
-    country: countries
+    country: number
     guesses: Guess[]
     complete: complete
     currentGuess: currentGuess
@@ -49,7 +44,7 @@ const GameProvider: React.FC = ({ children }) => {
     const [recentGuesses, updateRecentGuesses] = useQueue()
     const { settings } = useSettings()
 
-    const generateNewCountry = useCallback((): countryType => {
+    const generateNewCountry = useCallback((): number => {
         let temp: number
         do {
             temp = getRandomInt(234)
@@ -61,12 +56,10 @@ const GameProvider: React.FC = ({ children }) => {
         )
 
         updateRecentGuesses(temp)
-        return getCountry(temp)
+        return temp
     }, [recentGuesses, settings.smallCountriesDisabled, updateRecentGuesses])
 
-    const [country, setCountry] = useState<countries>(
-        () => generateNewCountry().country
-    )
+    const [country, setCountry] = useState<number>(() => generateNewCountry())
 
     const defaultGameStorage: gameStorage = useMemo(
         () => ({
@@ -136,7 +129,7 @@ const GameProvider: React.FC = ({ children }) => {
     const updateGame = useCallback(
         (gameItem: gameStorage | 'new'): void => {
             if (gameItem === 'new') {
-                setCountry(generateNewCountry().country)
+                setCountry(generateNewCountry())
                 setGame(defaultGameStorage)
             } else setGame(gameItem)
         },
