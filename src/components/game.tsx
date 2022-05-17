@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import CSS from 'csstype'
-import Country, { getCountry, countryType } from '../domain/countries'
+import Country, {
+    getCountry,
+    countryType,
+    countries,
+} from '../domain/countries'
 import MapDisplay from './mapDisplay'
 import Header from './header'
 import GuessBar from './guessBar'
@@ -242,45 +246,55 @@ const Game: React.FC = () => {
                     </div>
                     {displaySuggestion && game.currentGuess.value !== '' ? (
                         <ul role="listbox" className="GuessList">
-                            {countryList?.map((countryItem: countryType) => {
-                                return countryItem.country
-                                    .normalize('NFD')
-                                    .replace(/[\u0300-\u036f]/g, '')
-                                    .toLowerCase()
-                                    .includes(
-                                        game.currentGuess.value.toLowerCase()
-                                    ) ? (
-                                    <button
-                                        className="SuggestionBar"
-                                        type="submit"
-                                        onClick={() => {
-                                            setGame({
-                                                country: game.country,
-                                                guessesUsed: game.guessesUsed,
-                                                guesses: game.guesses,
-                                                complete: game.complete,
-                                                currentGuess: {
-                                                    value: countryItem.country,
-                                                    code: -1,
-                                                },
-                                            })
-                                            setDisplaySuggestions(false)
-                                            // ensures that the user is not forced to
-                                            // click off after clicking on a
-                                            // country in the suggestion list.
-                                            inputRef.current?.focus()
-                                            setDisplaySuggestions(false)
-                                        }}
-                                        key={countryItem.country.concat(
-                                            'suggestion'
-                                        )}
-                                        tabIndex={0}
-                                        style={colourPallete}
-                                    >
-                                        {countryItem.country}
-                                    </button>
-                                ) : null
-                            })}
+                            {countryList
+                                .map(
+                                    (countryItem: countryType): countries =>
+                                        countryItem.country
+                                            .normalize('NFD')
+                                            .replace(
+                                                /[\u0300-\u036f]/g,
+                                                ''
+                                            ) as countries
+                                )
+                                .filter((ctr: countries) =>
+                                    ctr
+                                        .toLowerCase()
+                                        .includes(
+                                            game.currentGuess.value.toLowerCase()
+                                        )
+                                )
+                                .map((ctr: countries) => {
+                                    return (
+                                        <button
+                                            className="SuggestionBar"
+                                            type="submit"
+                                            onClick={() => {
+                                                setGame({
+                                                    country: game.country,
+                                                    guessesUsed:
+                                                        game.guessesUsed,
+                                                    guesses: game.guesses,
+                                                    complete: game.complete,
+                                                    currentGuess: {
+                                                        value: ctr,
+                                                        code: -1,
+                                                    },
+                                                })
+                                                setDisplaySuggestions(false)
+                                                // ensures that the user is not forced to
+                                                // click off after clicking on a
+                                                // country in the suggestion list.
+                                                inputRef.current?.focus()
+                                                setDisplaySuggestions(false)
+                                            }}
+                                            key={ctr.concat('suggestion')}
+                                            tabIndex={0}
+                                            style={colourPallete}
+                                        >
+                                            {ctr}
+                                        </button>
+                                    )
+                                })}
                         </ul>
                     ) : null}
                 </div>
