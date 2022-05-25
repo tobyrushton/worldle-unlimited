@@ -28,6 +28,9 @@ const Game: React.FC = () => {
     )
     const [displaySuggestion, setDisplaySuggestions] = useState<boolean>(false)
     const [popup, setPopup] = useState<popup>({ enabled: false, value: '' })
+    const [suggestionList, setSuggestionList] = useState<countries[]>(
+        new Array<countries>()
+    )
     const containerRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
     const countryList: countryType[] = data as countryType[]
@@ -49,6 +52,23 @@ const Game: React.FC = () => {
             setDisplaySuggestions(false)
         }
     }
+
+    useEffect(() => {
+        setSuggestionList(
+            countryList
+                .map(
+                    (countryItem: countryType): countries =>
+                        countryItem.country
+                            .normalize('NFD')
+                            .replace(/[\u0300-\u036f]/g, '') as countries
+                )
+                .filter((ctr: countries) =>
+                    ctr
+                        .toLowerCase()
+                        .includes(game.currentGuess.value.toLowerCase())
+                )
+        )
+    }, [game.currentGuess.value])
 
     useEffect(() => {
         setCountry(new Country(getCountry(game.country)))
@@ -246,28 +266,23 @@ const Game: React.FC = () => {
                     </div>
                     {displaySuggestion && game.currentGuess.value !== '' ? (
                         <ul role="listbox" className="GuessList">
-                            {countryList
-                                .map(
-                                    (countryItem: countryType): countries =>
-                                        countryItem.country
-                                            .normalize('NFD')
-                                            .replace(
-                                                /[\u0300-\u036f]/g,
-                                                ''
-                                            ) as countries
-                                )
-                                .filter((ctr: countries) =>
-                                    ctr
-                                        .toLowerCase()
-                                        .includes(
-                                            game.currentGuess.value.toLowerCase()
-                                        )
-                                )
-                                .map((ctr: countries) => {
+                            {suggestionList.map(
+                                (ctr: countries, idx: number) => {
                                     return (
                                         <button
                                             className="SuggestionBar"
                                             type="submit"
+                                            style={
+                                                idx === 0
+                                                    ? {
+                                                          ...{
+                                                              fontWeight:
+                                                                  'bold',
+                                                          },
+                                                          ...colourPallete,
+                                                      }
+                                                    : colourPallete
+                                            }
                                             onClick={() => {
                                                 setGame({
                                                     country: game.country,
@@ -289,12 +304,12 @@ const Game: React.FC = () => {
                                             }}
                                             key={ctr.concat('suggestion')}
                                             tabIndex={0}
-                                            style={colourPallete}
                                         >
                                             {ctr}
                                         </button>
                                     )
-                                })}
+                                }
+                            )}
                         </ul>
                     ) : null}
                 </div>
@@ -331,10 +346,6 @@ const Game: React.FC = () => {
                             className="GuessInput"
                             placeholder="Country or Territory"
                             value={game.currentGuess.value}
-                            onSubmit={(e: React.SyntheticEvent) => {
-                                e.preventDefault()
-                                handleCountryGuess()
-                            }}
                             onFocus={() => {
                                 setDisplaySuggestions(true)
                             }}
@@ -357,7 +368,19 @@ const Game: React.FC = () => {
                             type="submit"
                             onClick={(e: React.SyntheticEvent) => {
                                 e.preventDefault()
-                                handleCountryGuess()
+                                if (displaySuggestion) {
+                                    setGame({
+                                        country: game.country,
+                                        guessesUsed: game.guessesUsed,
+                                        guesses: game.guesses,
+                                        complete: game.complete,
+                                        currentGuess: {
+                                            value: suggestionList[0],
+                                            code: -1,
+                                        },
+                                    })
+                                    setDisplaySuggestions(false)
+                                } else handleCountryGuess()
                             }}
                             style={colourPallete}
                         >
