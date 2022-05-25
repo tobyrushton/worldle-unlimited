@@ -32,7 +32,7 @@ body{
 
 .Header{
   width:100%;
-  font-size: 2rem;
+  font-size: 1.75rem;
   border-style: none none solid none;
   border-color: lightgray;
 }
@@ -62,8 +62,8 @@ body{
 
 .Icon{
   display: inline-block;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   padding-right: .7rem;
   cursor: pointer;
 }
