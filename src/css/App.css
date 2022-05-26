@@ -339,3 +339,7 @@ h3{
   color: inherit;
   background-color: inherit;
 }
+
+.SuggestionBar:hover {
+  font-weight: bold;
+}

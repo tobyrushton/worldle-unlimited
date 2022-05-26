@@ -31,6 +31,8 @@ const Game: React.FC = () => {
     const [suggestionList, setSuggestionList] = useState<countries[]>(
         new Array<countries>()
     )
+    const [suggestionBarHovered, setSuggestionBarHovered] =
+        useState<boolean>(false)
     const containerRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
     const countryList: countryType[] = data as countryType[]
@@ -68,7 +70,7 @@ const Game: React.FC = () => {
                         .includes(game.currentGuess.value.toLowerCase())
                 )
         )
-    }, [game.currentGuess.value])
+    }, [game.currentGuess.value, countryList])
 
     useEffect(() => {
         setCountry(new Country(getCountry(game.country)))
@@ -273,7 +275,8 @@ const Game: React.FC = () => {
                                             className="SuggestionBar"
                                             type="submit"
                                             style={
-                                                idx === 0
+                                                idx === 0 &&
+                                                !suggestionBarHovered
                                                     ? {
                                                           ...{
                                                               fontWeight:
@@ -283,7 +286,14 @@ const Game: React.FC = () => {
                                                       }
                                                     : colourPallete
                                             }
+                                            onMouseEnter={() =>
+                                                setSuggestionBarHovered(true)
+                                            }
+                                            onMouseLeave={() =>
+                                                setSuggestionBarHovered(false)
+                                            }
                                             onClick={() => {
+                                                setSuggestionBarHovered(false)
                                                 setGame({
                                                     country: game.country,
                                                     guessesUsed:
