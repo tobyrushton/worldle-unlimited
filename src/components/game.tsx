@@ -64,7 +64,7 @@ const Game: React.FC = () => {
                             .normalize('NFD')
                             .replace(/[\u0300-\u036f]/g, '') as countries
                 )
-                .filter((ctr: countries) =>
+                ?.filter((ctr: countries) =>
                     ctr
                         .toLowerCase()
                         .includes(game.currentGuess.value.toLowerCase())
@@ -378,7 +378,11 @@ const Game: React.FC = () => {
                             type="submit"
                             onClick={(e: React.SyntheticEvent) => {
                                 e.preventDefault()
-                                if (displaySuggestion) {
+                                if (
+                                    displaySuggestion &&
+                                    suggestionList[0] &&
+                                    game.currentGuess.value !== ''
+                                ) {
                                     setGame({
                                         country: game.country,
                                         guessesUsed: game.guessesUsed,
