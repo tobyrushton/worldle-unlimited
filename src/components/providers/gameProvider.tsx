@@ -141,9 +141,9 @@ const GameProvider: React.FC = ({ children }) => {
         [game, updateGame]
     )
 
-    //useEffect hook implemented to fix a big where game.currentGuess.value 
-    //was set to be undefined and as a result the side would crash
-    //no other purpose
+    // useEffect hook implemented to fix a big where game.currentGuess.value
+    // was set to be undefined and as a result the side would crash
+    // no other purpose
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
