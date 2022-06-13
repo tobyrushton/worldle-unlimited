@@ -378,7 +378,11 @@ const Game: React.FC = () => {
                             type="submit"
                             onClick={(e: React.SyntheticEvent) => {
                                 e.preventDefault()
-                                if (displaySuggestion) {
+                                if (
+                                    displaySuggestion &&
+                                    suggestionList[0] &&
+                                    game.currentGuess.value !== ''
+                                ) {
                                     setGame({
                                         country: game.country,
                                         guessesUsed: game.guessesUsed,
