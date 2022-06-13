@@ -67,7 +67,7 @@ const Game: React.FC = () => {
                 ?.filter((ctr: countries) =>
                     ctr
                         .toLowerCase()
-                        .includes(game.currentGuess.value.toLowerCase())
+                        .includes(game.currentGuess.value?.toLowerCase())
                 )
         )
     }, [game.currentGuess.value, countryList])
@@ -378,11 +378,7 @@ const Game: React.FC = () => {
                             type="submit"
                             onClick={(e: React.SyntheticEvent) => {
                                 e.preventDefault()
-                                if (
-                                    displaySuggestion &&
-                                    suggestionList[0] &&
-                                    game.currentGuess.value !== ''
-                                ) {
+                                if (displaySuggestion) {
                                     setGame({
                                         country: game.country,
                                         guessesUsed: game.guessesUsed,
