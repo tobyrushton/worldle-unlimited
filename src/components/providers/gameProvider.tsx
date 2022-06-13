@@ -147,7 +147,7 @@ const GameProvider: React.FC = ({ children }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        if (game.currentGuess.value === null) setGame(defaultGameStorage)
+        if (game.currentGuess.value === undefined) setGame(defaultGameStorage)
     }, [])
 
     return (
