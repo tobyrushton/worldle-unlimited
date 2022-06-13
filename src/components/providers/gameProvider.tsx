@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState } from 'react'
+import React, { useMemo, useCallback, useState, useEffect } from 'react'
 import { getCountry, directionEmojis } from '../../domain/countries'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import { useQueue } from '../../hooks/useQueue'
@@ -140,6 +140,15 @@ const GameProvider: React.FC = ({ children }) => {
         () => ({ game, setGame: updateGame }),
         [game, updateGame]
     )
+
+    //useEffect hook implemented to fix a big where game.currentGuess.value 
+    //was set to be undefined and as a result the side would crash
+    //no other purpose
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        if (game.currentGuess.value === null) setGame(defaultGameStorage)
+    }, [])
 
     return (
         <GameContext.Provider value={providerValue}>
