@@ -343,3 +343,16 @@ h3{
 .SuggestionBar:hover {
   font-weight: bold;
 }
+
+.footer{  
+  position: absolute;
+  bottom: 0;
+  padding-bottom: .5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}

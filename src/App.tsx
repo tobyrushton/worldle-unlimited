@@ -4,6 +4,7 @@ import StatsProvider from './components/providers/statsProvider'
 import ThemeProvider from './components/providers/themeProvider'
 import SettingsProvider from './components/providers/settingsProvider'
 import GameProvider from './components/providers/gameProvider'
+import Footer from './components/footer'
 
 const App: React.FC = () => {
     return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
                 <SettingsProvider>
                     <GameProvider>
                         <Game />
+                        <Footer />
                     </GameProvider>
                 </SettingsProvider>
             </StatsProvider>
